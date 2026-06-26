@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #ffeaa7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scene-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            padding: 20px;
+        }
+
+
+        .hidden-scene {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: scale(0.9);
+        }
+
+
+        .cake-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            width: 240px;
+            height: 320px;
+        }
+
+        .layer {
+            border-radius: 10px 10px 0 0;
+            animation: dropIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+            opacity: 0;
+            box-shadow: inset 0px 4px 6px rgba(255, 255, 255, 0.3), 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .layer-5 {
+            width: 220px;
+            height: 50px;
+            background-color: #e67e22;
+            animation-delay: 0.3s;
+            z-index: 1;
+            margin-top: -2px;
+        }
+
+        .layer-4 {
+            width: 190px;
+            height: 45px;
+            background-color: #e74c3c;
+            animation-delay: 1.0s;
+            z-index: 2;
+            margin-top: -2px;
+        }
+
+        .layer-3 {
+            width: 160px;
+            height: 45px;
+            background-color: #9b59b6;
+            animation-delay: 1.7s;
+            z-index: 3;
+            margin-top: -2px;
+        }
+
+        .layer-2 {
+            width: 130px;
+            height: 40px;
+            background-color: #3498db;
+            animation-delay: 2.4s;
+            z-index: 4;
+            margin-top: -2px;
+        }
+
+        .layer-1 {
+            width: 100px;
+            height: 35px;
+            background-color: #fd79a8;
+            animation-delay: 3.1s;
+            z-index: 5;
+        }
+
+        .candle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            animation: dropIn 0.8s ease-out forwards;
+            animation-delay: 3.8s;
+            opacity: 0;
+            z-index: 10;
+            margin-bottom: -5px;
+            padding: 10px;
+        }
+
+        #flame {
+            font-size: 28px;
+            animation: flicker 0.3s infinite alternate;
+        }
+
+        .stick {
+            font-size: 32px;
+            margin-top: -12px;
+        }
+
+        @keyframes dropIn {
+            0% {
+                transform: translateY(-400px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scale(1) rotate(-2deg);
+            }
+
+            100% {
+                transform: scale(1.15) rotate(2deg);
+            }
+        }
+
+        .hint {
+            margin-top: 40px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3436;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .show-hint {
+            opacity: 1 !important;
+        }
+
+
+        .book {
+            width: 340px;
+            height: 440px;
+            position: relative;
+            perspective: 1500px;
+            -webkit-perspective: 1500px;
+            /* iOS Safari Support */
+            margin-left: 170px;
+            /* စာအုပ်လှန်လျှင် အလယ်ဗဟိုကျစေရန် */
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            -webkit-transform-origin: left center;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            -webkit-transition: -webkit-transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+        }
+
+        .front-side,
+        .back-side {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .front-side {
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .back-side {
+            background-color: #f5f6fa;
+            color: #333;
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            border-radius: 15px 0 0 15px;
+            border-right: 2px solid #e0e0e0;
+        }
+
+        .flipped {
+            transform: rotateY(-180deg);
+            -webkit-transform: rotateY(-180deg);
+        }
+
+        .book-img {
+            width: 90%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .click-hint {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+
+
+        @media (max-width: 480px) {
+            .book {
+                width: 160px;
+                height: 270px;
+                margin-left: 80px;
+            }
+
+            .front-side,
+            .back-side {
+                padding: 12px;
+                border-radius: 8px !important;
+            }
+
+            .book-img {
+                width: 95%;
+                max-height: 110px;
+                margin-bottom: 8px;
+            }
+
+            .front-side h2,
+            .back-side h2 {
+                font-size: 13px;
+                margin-bottom: 4px;
+                line-height: 1.3;
+            }
+
+            .front-side p,
+            .back-side p {
+                font-size: 10px;
+                line-height: 1.4;
+            }
+
+            .click-hint {
+                font-size: 9px;
+                margin-top: 10px;
+            }
+
+            .cake-area {
+                transform: scale(0.75);
+            }
+
+            .hint {
+                font-size: 14px;
+                padding: 8px 16px;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<audio id="birthdayMusic" preload="auto">
+    <source src="https://www.orangefreesounds.com/wp-content/uploads/2016/08/Happy-birthday-instrumental.mp3" type="audio/mpeg">
+</audio>
+
+    <div id="cake-scene" class="scene-container">
+        <div class="cake-area">
+
+            <div id="candle-wrapper" class="candle">
+                <span id="flame">🔥</span>
+                <span class="stick">🕯️</span>
+            </div>
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3"></div>
+            <div class="layer layer-4"></div>
+            <div class="layer layer-5"></div>
+        </div>
+        <p id="instruction" class="hint" onclick="blowCandle()">ဖယောင်းတိုင်မီးကို နှိပ်ပြီး မှုတ်လိုက်ပါ 🎂</p>
+    </div>
+
+
+    <div id="book-scene" class="scene-container hidden-scene">
+        <div class="book">
+            
+            <div class="page" id="sheet1" style="z-index: 3;">
+                <div class="front-side">
+                    <h2 id="cover-title">Happy Birthday</h2>
+                    <p class="click-hint">စာအုပ်ကို နှိပ်ပြီး ဖွင့်ဖတ်ပါ... 📖</p>
+                </div>
+                <div class="back-side">
+                    <h2 id="p1-title">Page 1</h2>
+                    <img id="p1-img" src="" alt="Photo 1" class="book-img">
+                    <p id="p1-text">hello</p>
+                </div>
+            </div>
+          
+            <div class="page" id="sheet2" style="z-index: 2;">
+                <div class="front-side">
+                    <h2 id="p2-title">Page 2</h2>
+                    <img id="p2-img" src="" alt="Photo 2" class="book-img">
+                    <p id="p2-text">Text here...</p>
+                </div>
+                <div class="back-side">
+                    <h2 id="p3-title">Page 3</h2>
+                    <img id="p3-img" src="" alt="Photo 3" class="book-img">
+                    <p id="p3-text">Text here...</p>
+                </div>
+            </div>
+           
+            <div class="page" id="sheet3" style="z-index: 1;">
+                <div class="front-side">
+                    <h2 id="p4-title">Page 4</h2>
+                    <img id="p4-img" src="" alt="Photo 4" class="book-img">
+                    <p id="p4-text">Text here...</p>
+                </div>
+                <div class="back-side">
+                    <h2 id="end-title">The End ❤️</h2>
+                    <img id="end-img" src="" alt="End Photo" class="book-img">
+                    <p id="end-text">Thank you!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const CONFIG = {
+            coverTitle: "Happy Birthday To You! 🎂",
+
+            page1: {
+                title: "ဆုတောင်းလွှာ (၁)",
+
+                image: "https://i.postimg.cc/mkNcGbwD/IMG-20260619-105714-534.jpg" ,
+                text:'ယနေ့ကျရောက်သော မွေးနေ့မှစ၍ နောင်နှစ်ပေါင်းများစွာတိုင် စိတ်ချမ်းသာ ကိုယ်ကျန်းမာပြီး အောင်မြင်မှုများစွာ ရရှိပါစေ။',
+            },
+             page2: {
+                title: "ဆုတောင်းလွှာ (၂)",
+
+                image: "https://i.postimg.cc/RFg8ptkd/IMG-20260619-110652-627.jpg" ,
+                text:'မွေးနေ့ရက်မြတ်မှစ၍ ဘဝတစ်လျှောက်လုံး ပျော်ရွှင်အေးချမ်းမှုများနှင့် ပြည့်စုံပါစေ။”',
+            },
+             page3: {
+                title: "ဆုတောင်းလွှာ (၃)",
+
+                image: "https://i.postimg.cc/DzZ1dbcw/IMG-20260619-105244-869.jpg" ,
+                text:'“ဒီထူးမြတ်သောနေ့မှစ၍ ကျန်းမာခြင်း၊ ချမ်းသာခြင်းနှင့် ကောင်းကျိုးများ အစဉ်ရရှိပါစေ။”',
+            },
+             page4: {
+                title: "ဆုတောင်းလွှာ (၄)",
+
+                image: "https://i.postimg.cc/FKR0gJxR/IMG-20260619-105244-792.jpg" ,
+                text:'🌸 “မွေးနေ့မှစ၍ အခက်အခဲများကို ကျော်လွှားနိုင်ပြီး အောင်မြင်သောဘဝတစ်ခု ပိုင်ဆိုင်နိုင်ပါစေ။”',
+            },
+            endPage: {
+                title: "The End ❤️",
+                 image: "https://i.postimg.cc/HxvZ9gMZ/IMG-20260619-110835-320.jpg" ,
+                 text:'✨ “ယနေ့ထူးခြားသောနေ့လေးမှစ၍ ရင်ထဲအေးချမ်းပြီး ဘဝတစ်လျှောက်လုံး ပျော်ရွှင်ပါစေ။”',
+                 
+            }
+        };
+
+
+        function initData() {
+            document.getElementById('cover-title').innerText = CONFIG.coverTitle;
+            document.getElementById('p1-title').innerText = CONFIG.page1.title;
+            document.getElementById('p1-img').src = CONFIG.page1.image;
+            document.getElementById('p1-text').innerText = CONFIG.page1.text;
+            document.getElementById('p2-title').innerText = CONFIG.page2.title;
+            document.getElementById('p2-img').src = CONFIG.page2.image;
+            document.getElementById('p2-text').innerText = CONFIG.page2.text;
+            document.getElementById('p3-title').innerText = CONFIG.page3.title;
+            document.getElementById('p3-img').src = CONFIG.page3.image;
+            document.getElementById('p3-text').innerText = CONFIG.page3.text;
+            document.getElementById('p4-title').innerText = CONFIG.page4.title;
+            document.getElementById('p4-img').src = CONFIG.page4.image;
+            document.getElementById('p4-text').innerText = CONFIG.page4.text;
+            document.getElementById('end-title').innerText = CONFIG.endPage.title;
+            document.getElementById('end-img').src = CONFIG.endPage.image;
+            document.getElementById('end-text').innerText = CONFIG.endPage.text;
+        }
+        initData();
+
+        const cakeScene = document.getElementById('cake-scene');
+        const bookScene = document.getElementById('book-scene');
+        const candleWrapper = document.getElementById('candle-wrapper');
+        const flame = document.getElementById('flame');
+        const instruction = document.getElementById('instruction');
+
+
+        setTimeout(() => {
+            instruction.classList.add('show-hint');
+        }, 4500);
+
+
+        function blowCandle() {
+            flame.style.display = 'none';
+            instruction.innerText = "မီးငြှိမ်းသွားပါပြီ... ✨";
+
+
+            setTimeout(() => {
+                cakeScene.classList.add('hidden-scene');
+
+                setTimeout(() => {
+                    bookScene.classList.remove('hidden-scene');
+                }, 600);
+
+            }, 1000);
+        }
+
+
+        candleWrapper.addEventListener('click', blowCandle);
+        candleWrapper.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            blowCandle();
+        }, { passive: false });
+
+
+        const sheets = [
+            document.getElementById('sheet1'),
+            document.getElementById('sheet2'),
+            document.getElementById('sheet3')
+        ];
+
+        sheets.forEach((sheet, index) => {
+            function flipSheet(e) {
+                e.stopPropagation();
+                if (!sheet.classList.contains('flipped')) {
+                    sheet.classList.add('flipped');
+                    setTimeout(() => { sheet.style.zIndex = index + 1; }, 400);
+                } else {
+                    sheet.classList.remove('flipped');
+                    setTimeout(() => { sheet.style.zIndex = 3 - index; }, 400);
+                }
+            }
+            sheet.addEventListener('click', flipSheet);
+        });
+        function blowCandle() {
+
+    const music = document.getElementById('birthdayMusic');
+    music.play().catch(() => {});
+
+    flame.style.display = 'none';
+    instruction.innerText = "🎉 Happy Birthday 🎂";
+
+    setTimeout(() => {
+        cakeScene.classList.add('hidden-scene');
+
+        setTimeout(() => {
+            bookScene.classList.remove('hidden-scene');
+        }, 600);
+
+    }, 1000);
+}
+
+    </script>
+</body>
+
+</html>
